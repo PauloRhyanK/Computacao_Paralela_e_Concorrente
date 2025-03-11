@@ -12,22 +12,26 @@ import threading
 import time
 
 class MyThread(threading.Thread):
-    def __init__(self, name):
+    def __init__(self, name, fila):
         threading.Thread.__init__(self)
         self.name = name
+        self.fila = fila        
+        
     def run(self):
         print("Iniciando thread %s." % self.name)
-        processando_fila()
+        processando_fila(self.fila)
         print("Encerrando thread %s." % self.name)
-def processando_fila():
+        
+def processando_fila(fila):
     while True:
         try:
-            x = my_queue.get(block=False)
+            x = fila.get(block=False)
         except queue.Empty:
             return
         else:
          fatoracao(x)
         time.sleep(1)
+        
 def fatoracao(x):
     resultado = 'Fatores positivos de %i sao: ' % x
     for i in range(1, x + 1):
@@ -48,17 +52,17 @@ for x in input_:
     my_lifo_queue.put(x)
     my_priority_queue.put(x)
     
-print("Tamanho Queue: $d" %(my_queue.qsize()))
-print("Tamanho LifoQueue: $d" %(my_lifo_queue.qsize()))
-print("Tamanho PriorityQueue: $d" %(my_priority_queue.qsize()))
+print("Tamanho Queue: %d" %(my_queue.qsize()))
+print("Tamanho LifoQueue: %d" %(my_lifo_queue.qsize()))
+print("Tamanho PriorityQueue: %d" %(my_priority_queue.qsize()))
 
 for j in input_:
  fatoracao(j)
 
 # Inicializando 3 threads
-thread1 = MyThread('A')
-thread2 = MyThread('B')
-thread3 = MyThread('C')
+thread1 = MyThread('Queue', my_queue)
+thread2 = MyThread('LIFO Queue', my_lifo_queue)
+thread3 = MyThread('Priority Queue', my_priority_queue)
 
 thread1.start()
 thread2.start()

@@ -25,11 +25,15 @@ class MyThread(threading.Thread):
 def processando_fila(fila):
     while True:
         try:
-            x = fila.get(block=False)
+            item = fila.get(block=False)
         except queue.Empty:
             return
         else:
-         fatoracao(x)
+            if isinstance(item, tuple):
+                _, x = item
+            else:
+                x = item    
+            fatoracao(x)
         time.sleep(1)
         
 def fatoracao(x):
@@ -46,11 +50,13 @@ my_lifo_queue = queue.LifoQueue()
 my_priority_queue = queue.PriorityQueue()
 # Determinando valores a serem fatorados
 input_ = [1, 10, 4, 3]
+priority = [2, 3, 0, 1]
+
 # Inserindo os valores numa fila
-for x in input_:
+for x,p in zip(input_, priority):
     my_queue.put(x)
     my_lifo_queue.put(x)
-    my_priority_queue.put(x)
+    my_priority_queue.put((p,x))
     
 print("Tamanho Queue: %d" %(my_queue.qsize()))
 print("Tamanho LifoQueue: %d" %(my_lifo_queue.qsize()))

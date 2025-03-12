@@ -1,4 +1,7 @@
 """""
+Aluno: Paulo Rhyan Kuster
+Turma: CC7N
+
 A partir do código "fatoracao.py", trabalhado em laboratório, apresentar as soluções para o problema de fatoração do input proposto:
 
 1. utilizando LIFO para gestão dos números a serem fatorados;

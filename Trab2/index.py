@@ -11,7 +11,6 @@ planets = {
     'Terra': 365,
     'Marte': 687,
     'Júpiter': 4333,
-    'Saturno': 10759
 }
 
 # Definindo a velocidade angular em graus/dia
